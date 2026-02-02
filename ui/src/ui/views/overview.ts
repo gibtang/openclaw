@@ -154,7 +154,6 @@ export function renderOverview(props: OverviewProps) {
             <div style="position: relative; display: flex; align-items: stretch;">
               <input
                 type="password"
-                id="overview-password"
                 .value=${props.password}
                 @input=${(e: Event) => {
                   const v = (e.target as HTMLInputElement).value;
@@ -168,10 +167,10 @@ export function renderOverview(props: OverviewProps) {
                 class="cfg-input__toggle"
                 style="position: absolute; right: 4px; top: 50%; transform: translateY(-50%);"
                 title="Toggle visibility"
-                @click=${() => {
-                  const input = document.getElementById(
-                    "overview-password",
-                  ) as HTMLInputElement;
+                @click=${(e: Event) => {
+                  const button = e.currentTarget as HTMLElement;
+                  const wrapper = button.parentElement;
+                  const input = wrapper?.querySelector('input') as HTMLInputElement;
                   if (input) {
                     input.type = input.type === "password" ? "text" : "password";
                   }

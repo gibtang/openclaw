@@ -320,15 +320,12 @@ function renderTextInput(params: {
         : "");
   const displayValue = value ?? "";
 
-  const inputId = `cfg-input-${pathKey(path)}`;
-
   return html`
     <div class="cfg-field">
       ${showLabel ? html`<label class="cfg-field__label">${label}</label>` : nothing}
       ${help ? html`<div class="cfg-field__help">${help}</div>` : nothing}
       <div class="cfg-input-wrap">
         <input
-          id=${inputId}
           type=${isSensitive ? "password" : inputType}
           class="cfg-input"
           placeholder=${placeholder}
@@ -363,8 +360,10 @@ function renderTextInput(params: {
                 class="cfg-input__toggle"
                 title="Toggle visibility"
                 ?disabled=${disabled}
-                @click=${() => {
-                  const input = document.getElementById(inputId) as HTMLInputElement;
+                @click=${(e: Event) => {
+                  const button = e.currentTarget as HTMLElement;
+                  const wrapper = button.parentElement;
+                  const input = wrapper?.querySelector('input') as HTMLInputElement;
                   if (input) {
                     input.type = input.type === "password" ? "text" : "password";
                   }

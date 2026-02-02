@@ -174,7 +174,6 @@ function renderSkill(skill: SkillStatusEntry, props: SkillsProps) {
                 <div style="position: relative; display: flex; align-items: stretch;">
                   <input
                     type="password"
-                    id="skill-api-key-${skill.skillKey}"
                     .value=${apiKey}
                     @input=${(e: Event) =>
                       props.onEdit(skill.skillKey, (e.target as HTMLInputElement).value)}
@@ -185,10 +184,10 @@ function renderSkill(skill: SkillStatusEntry, props: SkillsProps) {
                     class="cfg-input__toggle"
                     style="position: absolute; right: 4px; top: 50%; transform: translateY(-50%);"
                     title="Toggle visibility"
-                    @click=${() => {
-                      const input = document.getElementById(
-                        `skill-api-key-${skill.skillKey}`,
-                      ) as HTMLInputElement;
+                    @click=${(e: Event) => {
+                      const button = e.currentTarget as HTMLElement;
+                      const wrapper = button.parentElement;
+                      const input = wrapper?.querySelector('input') as HTMLInputElement;
                       if (input) {
                         input.type = input.type === "password" ? "text" : "password";
                       }
